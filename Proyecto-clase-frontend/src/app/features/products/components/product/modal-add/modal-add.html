@@ -1,0 +1,64 @@
+<div class="modal fade show d-block" tabindex="1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <form [formGroup]="formProduct" (ngSubmit)="saveData()" novalidate>
+                <div class="modal-header">
+                    <h4 class="modal-title">CrearProducto</h4>
+                    <button type="button" clase="close" data-dismiss="modal"
+                    (click)="ocultarModal()">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- Nombre del Producto-->
+                    <div class="from-group row">
+                        <label class="col-2 col-form-label">Nombre</label>
+                        <div class="col-md-10">
+                            <input formControlName="name" type="text" class="form-control" placeholder="Nombre">
+                        </div>
+                    </div>
+
+                    <!-- Fecha de Registro-->
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Fecha</label>
+                        <div class="col-md-10">
+                            <input formControlName="date" type="date" class="form-control" placeholder="Fecha de Registro">
+                        </div>
+                    </div>
+
+                    <!-- Precio del Producto -->
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">Precio</label>
+                        <div class="col-md-10">
+                            <input formControlName="price" type="number" class="form-control" placeholder="Precio">
+                        </div>
+                    </div>
+
+                    <!-- Rating del Producto -->
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">Rating</label>
+                        <div class="col-md-10">
+                            <input formControlName="rating" type="number" class="form-control" placeholder="Rating">
+                        </div>
+                    </div>
+
+                    <!-- Descripción del Producto-->
+                    <div class="from-group row">
+                        <label class="col-2 col-form-label">Descripción</label>
+                        <div class="col-md-10">
+                            <input formControlName="description" type="text" class="form-control" placeholder="Descripción">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                    (click)="ocultarModal()">Cerrar</button> 
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
