@@ -40,17 +40,20 @@
               </a>
               <ul class="sub-menu collapse" id="productos">
                 <li><a [routerLink]="['products']"><i class="bi bi-cart-fill"></i>Administrar</a></li>
-                <li><a href="">Ver fichas</a></li>
-                <li><a href=""> Informes</a></li>
+                <li><a [routerLink]="['numbers']">Ver fichas</a></li>
+                <li><a [routerLink]="['products-pagination']"> Informes</a></li>
               </ul>
             </li>
-            <li> <a href="#"><i class="bi bi-speedometer"></i><span class="nav-label">Dashboard</span></a> </li>
+            <li> <a [routerLink]="['product-sales']">
+              <i class="bi bi-seedometer"></i>
+              <span class="nav-label">Dashboard</span></a>
+            </li>
             <li> <a href="#" data-bs-toggle="collapse" data-bs-target="#usuarios" class="collapsed active"><i
                   class="bi bi-person"></i> <span class="nav-label">Usuarios</span><span
                   class="bi bi-chevron-right"></span></a>
               <ul class="sub-menu collapse" id="usuarios">
-                <li><a href=""> Administrar</a></li>
-                <li><a href=""> Ver fichas</a></li>
+                <li><a [routerLink]="['users']"> Ver fichas</a></li>
+                <li><a [routerLink]="['maps']"> Ver mapas</a></li>
                 <li><a href=""> Informes</a></li>
               </ul>
             </li>

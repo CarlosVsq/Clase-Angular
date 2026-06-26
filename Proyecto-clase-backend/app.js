@@ -119,6 +119,23 @@ app.get('/productos', (req, res) => {
     });
 });
 
+// Desafío: top 5 productos con mejor ranking (datos reales desde la base de datos)
+app.get('/productos/top-rating', (req, res) => {
+    const sql = 'SELECT productName, starRating FROM productos ORDER BY starRating DESC LIMIT 5';
+    conn.query(sql, (err, results) => {
+        if (err) throw err;
+        // Formato que espera ngx-charts: { name, value }
+        const productos = results.map(p => ({
+            name: p.productName,
+            value: p.starRating
+        }));
+        res.status(200).json({
+            ok: true,
+            productos: productos
+        });
+    });
+});
+
 app.get('/', (req, res) => {
     res.status(200).json({
         ok: true,
@@ -225,3 +242,79 @@ app.put('/upload/productos/:id', (req, res) => {
         });
     });
 });
+
+const  { OAuth2Cliente } = require('google-auth-library');
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+
+//Login con Google
+app.post('/google-login', async (req, res) => {
+    const { token } = req.body;
+    console.log('Token recibido: ' + token);
+    try{
+        const { name, email, picture } = await verifyGoogleToken(token);
+        conn.query('SELECT * FROM usuarios WHERE userEmail =?', [email], (err, results) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al consultar la base de datos',
+                    error: err
+                });
+            }
+            if (results.length == 0 || !results.length) {
+                console.log('Usuario no encontrado -> creando nuevo usuario');
+                let datosUsuario = {
+                    userName: name,
+                    userEmail: email,
+                    userImg: picture
+                };
+                conn.query('INSERT INTO usuarios SET ?', datosUsuario, (err, result) => {
+                    if (err) {
+                        return res.status(500).json({
+                            ok: false,
+                            mensaje: 'Error al crear el usuario',
+                            error: err
+                        });
+                    }
+                    res.status(201).json({
+                        ok: true,
+                        mensaje: 'Usuario creado correctamente'
+                    });
+                });
+            } else {
+                console.log('Usuario encontrado');
+            }
+            console.log('Generar token para el usuario');
+            const user = results[0];
+            const token = jwt.sign({ usuario: user }, SEED, { expiresIn: 14400});
+            res.status(200).json({
+                ok: true,
+                mensaje: 'Login exitoso',
+                usuario: user,
+                token: token
+            });
+        });
+    } catch (error) {
+        res.status(401).json({
+            ok: false,
+            mensaje: 'Token no válido',
+            error:error
+        })
+    }
+});
+
+//Verificar el token de Google
+async function verifyGoogleToken(token) {
+    const client = new OAuth2Cliente(GOOGLE_CLIENT_ID);
+    const ticket = await client.verifyGoogleToken({
+        idToken: token,
+        audience: GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    console.log(payload);
+    return {
+        name:payload.name,
+        email: payload.email,
+        picture: payload.picture
+    }
+}
+

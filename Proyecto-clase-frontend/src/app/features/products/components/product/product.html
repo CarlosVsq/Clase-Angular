@@ -15,7 +15,7 @@
 
 <br>
 	@if(isModalOpen()){
-	<app-modal-add (close)="cerrarModal()"></app-modal-add>
+	<app-modal-add (close)="cerrarModal()" (save)="guardarProducto($event)"></app-modal-add>
 	}
 <br>
 	

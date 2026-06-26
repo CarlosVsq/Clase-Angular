@@ -9,6 +9,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 })
 export class ModalAdd {
   close = output<void>();
+  save = output<any>();
   private fb = inject(FormBuilder);
 
   formProduct = this.fb.group({
@@ -21,7 +22,14 @@ export class ModalAdd {
   })
 
   saveData() {
+    if (this.formProduct.invalid) {
+      this.formProduct.markAllAsTouched();
+      console.warn('Formulario inválido:', this.formProduct.value);
+      return;
+    }
     console.log('Guardando producto:', this.formProduct.value);
+    this.save.emit(this.formProduct.value);
+    this.close.emit();
   }
 
   ocultarModal() {

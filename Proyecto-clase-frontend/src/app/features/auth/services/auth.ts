@@ -2,12 +2,14 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
   private http = inject(HttpClient);
+  private apiUrl = environment.apiEndpoint;
   public isAutenticated = signal<boolean>(false);
 
   constructor(){
@@ -19,7 +21,7 @@ export class Auth {
   login(email: string, password: string){
     let userLogin = { email: email, password: password };
 
-    return this.http.post('http://localhost:3000/login', userLogin).pipe(
+    return this.http.post(`${this.apiUrl}/login`, userLogin).pipe(
       map((resp: any) => {
         console.log('Login successful', resp);
         localStorage.setItem('token', resp.token);
@@ -35,5 +37,19 @@ export class Auth {
     localStorage.removeItem('usuario');
     this.isAutenticated.set(false);
     this.router.navigate(['/login']);
+  }
+
+  public loginGoogle(token: string){
+    const header = { 'Content-Type': `application/json`};
+    let googleToken = { token: token };
+    return this.http.post(`${this.apiUrl}/google-login`, googleToken, { headers: header }).pipe(
+      map((resp: any) => {
+        console.log('Login with Google successful:', resp);
+        localStorage.setItem('token', resp.token);
+        localStorage.setItem('usuario', JSON.stringify(resp.usuario));
+        this.isAutenticated.set(true);
+        this.router.navigate(['/home']);
+      })
+    )
   }
 }

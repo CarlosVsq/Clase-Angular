@@ -1,0 +1,56 @@
+<div class="card-body">
+    <h4 class="card-title border-bottom">Gráfico de Barras Vertical</h4>
+    <ngx-charts-bar-vertical
+        [scheme]="colorScheme"
+        [view]="[1000,400]"
+        [results]="saleData()"
+        [xAxisLabel]="'Productos'"
+        [legendTitle]="'Venta de Productos'"
+        [yAxisLabel]="'Ventas'"
+        [legend]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxis]="true"
+        [yAxis]="true"
+        [gradient]="true"
+    ></ngx-charts-bar-vertical>
+</div>
+
+<div class="card-body">
+    <h4 class="card-title border-bottom">Gráfico de Torta</h4>
+    <ngx-charts-pie-chart
+        [view]="[1000,300]"
+        [results]="saleData()"
+        [legendTitle]="'Venta de Productos'"
+        [legend]="true"
+        [gradient]="true"
+    ></ngx-charts-pie-chart>
+</div>
+
+<div class="card-body">
+    <h4 class="card-title border-bottom">Gráfico de Avanzado de Torta</h4>
+    <ngx-charts-advanced-pie-chart
+        [view]="[1000,300]"
+        [results]="saleData()"
+        [gradient]="true"
+    ></ngx-charts-advanced-pie-chart>
+</div>
+
+<!-- Desafío: Top 5 productos con mejor ranking (datos reales desde la BD) - barras horizontal -->
+<div class="card-body">
+    <h4 class="card-title border-bottom">Top 5 Productos por Ranking</h4>
+    <ngx-charts-bar-horizontal
+        [scheme]="colorScheme"
+        [view]="[1000,400]"
+        [results]="topRatedData()"
+        [xAxisLabel]="'Ranking'"
+        [yAxisLabel]="'Producto'"
+        [legendTitle]="'Top Productos'"
+        [legend]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxis]="true"
+        [yAxis]="true"
+        [gradient]="true"
+    ></ngx-charts-bar-horizontal>
+</div>
