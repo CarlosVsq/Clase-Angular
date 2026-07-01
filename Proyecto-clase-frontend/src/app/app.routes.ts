@@ -4,6 +4,7 @@ import { Product } from './features/products/components/product/product';
 import { Welcome } from './features/home/welcome/welcome';
 import { PageNotFound } from './features/not-found/page-not-found/page-not-found';
 import { Login } from './features/auth/components/login/login';
+import { ResetPassword } from './features/auth/components/reset-password/reset-password';
 
 import { loginGuard } from './features/auth/guards/login-guard';
 
@@ -24,13 +25,9 @@ export const routes: Routes = [
     { path: 'numbers', component: Number, canActivate: [loginGuard] },
     { path: 'users', component: User, canActivate: [loginGuard] },
     { path: 'login', component: Login },
+    { path: 'reset-password', component: ResetPassword },
 
-    /* detalle de producto, usando estándar de recursos */
-    // { path: 'products/:id', component: ProductId },
-
-    // Redirección inicial
     { path: '', redirectTo: 'home', pathMatch: 'full' },
 
-    // Siempre al final para manejar rutas no definidas
     { path: '**', component: PageNotFound }
 ];

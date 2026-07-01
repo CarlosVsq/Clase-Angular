@@ -14,7 +14,6 @@ export class Product {
 
   constructor(private http: HttpClient) { }
 
-  // El backend protege todas las rutas de /productos con JWT, así que toda petición debe enviar el token
   private getAuthHeaders() {
     const token = localStorage.getItem('token') || '';
     return { headers: { Authorization: `Bearer ${token}` } };

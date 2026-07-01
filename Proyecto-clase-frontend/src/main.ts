@@ -4,7 +4,6 @@ import localeEsAr from '@angular/common/locales/es-AR';
 import { appConfig } from './app/app.config';
 import { App } from './app/app';
 
-// Registrar los datos del locale usado en LOCALE_ID ('es-AR') para que DatePipe/CurrencyPipe funcionen
 registerLocaleData(localeEsAr, 'es-AR');
 
 bootstrapApplication(App, appConfig)

@@ -39,6 +39,25 @@ export class Auth {
     this.router.navigate(['/login']);
   }
 
+  private resetToken: string | null = null;
+
+  requestResetCode(email: string){
+    return this.http.post(`${this.apiUrl}/recuperar-password`, { email }).pipe(
+      map((resp: any) => {
+        this.resetToken = resp.token;
+        return resp;
+      })
+    );
+  }
+
+  resetPassword(code: string, password: string){
+    return this.http.post(`${this.apiUrl}/reset-password`, {
+      token: this.resetToken,
+      code: code,
+      password: password
+    });
+  }
+
   public loginGoogle(token: string){
     const header = { 'Content-Type': `application/json`};
     let googleToken = { token: token };

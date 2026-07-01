@@ -21,7 +21,6 @@ export class ProductSalesAnalytics {
     ]
   }
 
-  // Desafío: top 5 productos con mejor ranking, desde la base de datos
   getTopRatedProducts(): Observable<{ name: string, value: number }[]> {
     const token = localStorage.getItem('token') || '';
     return this.http.get<any>(

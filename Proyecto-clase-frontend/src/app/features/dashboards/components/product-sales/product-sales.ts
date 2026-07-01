@@ -20,7 +20,6 @@ export class ProductSales {
   ngOnInit() {
     this.saleData.set(this.productSalesAnalytics.getSales());
 
-    // Desafío: cargar el top 5 de productos por ranking desde la base de datos
     this.productSalesAnalytics.getTopRatedProducts().subscribe({
       next: (data) => this.topRatedData.set(data),
       error: (err) => console.error('Error al obtener el top de productos:', err)
